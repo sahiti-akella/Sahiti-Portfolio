@@ -1,13 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CdkAccordionModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+  styleUrls: ['./app.component.sass'],
+  encapsulation: ViewEncapsulation.None,
+  
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'sahiti-akella';
+  projects = [
+    { title: 'Project 1', description: 'Description for Project 1' },
+    { title: 'Project 2', description: 'Description for Project 2' },
+    { title: 'Project 3', description: 'Description for Project 3' }
+  ];
+ 
+
+  ngAfterViewInit() {
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+  }
+
+ 
 }

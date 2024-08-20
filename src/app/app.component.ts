@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,21 +23,11 @@ export class AppComponent implements AfterViewInit {
  
 
   ngAfterViewInit() {
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+    setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.fade-in').forEach(el => {
+        el.classList.add('visible');
       });
-    }, {
-      threshold: 0.1
-    });
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
-
+    }, 100); 
   }
 
  
